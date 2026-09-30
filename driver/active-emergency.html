@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Active Emergency Mission | SaveLife 360 Driver</title>
+  <meta name="description" content="Driver active emergency control - patient pickup verification and hospital selection.">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Driver Dispatch</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge driver">🚑 Verified Driver</span>
+        <span class="badge badge-critical" style="font-size:0.68rem;">MISSION ACTIVE</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Dispatch Operations</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="requests.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>New Requests</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="active-emergency.html" class="sidebar-link active">
+            <span class="menu-icon">⚡</span>
+            <span>Active Emergency</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="navigation.html" class="sidebar-link">
+            <span class="menu-icon">🧭</span>
+            <span>Navigation HUD</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Selection</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Trip History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Active Emergency Mission</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="live-indicator">
+            <span class="status-dot pulse" style="color:var(--critical);"></span>
+            <span id="active-stage-title" style="font-weight:800;">EN ROUTE TO PATIENT</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Controls
+          </button>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Active View Container -->
+        <div id="active-emergency-view">
+          
+          <!-- Top Info Card -->
+          <div class="card" style="margin-bottom: 1.5rem; border: 2px solid var(--border-color);">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem;">
+              <div>
+                <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.35rem;">
+                  <span id="active-emg-level-text" class="badge badge-critical">CRITICAL</span>
+                  <span style="font-size:0.85rem; color:var(--text-secondary); font-weight:700;">UNIT AMB-704-CR</span>
+                </div>
+                <h2 style="font-size:1.6rem; font-weight:800; color:var(--text-primary);" id="active-emg-type-text">
+                  Breathing Emergency
+                </h2>
+              </div>
+
+              <div style="display:flex; gap:2rem; text-align:right;">
+                <div>
+                  <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Remaining Distance</span>
+                  <div style="font-size:1.6rem; font-weight:800; color:var(--text-primary);" id="active-distance-text">2.4 km</div>
+                </div>
+                <div>
+                  <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Estimated Arrival</span>
+                  <div style="font-size:1.6rem; font-weight:800; color:var(--primary-accent);" id="active-eta-text">5 min</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; background:var(--bg-muted); padding:1rem 1.25rem; border-radius:var(--radius-md); font-size:0.9rem;">
+              <div>
+                <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Pickup Location:</span>
+                <p style="font-weight:700; color:var(--text-primary);" id="active-pickup-address">742 Evergreen Terrace, Sector 4</p>
+              </div>
+              <div>
+                <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Current Ambulance Position:</span>
+                <p style="font-weight:700; color:var(--text-primary);">West Parkway &bull; Speed 58 km/h</p>
+              </div>
+            </div>
+
+            <!-- Primary and Secondary Action Buttons required by Section 15 -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; flex-wrap:wrap; gap:1rem;">
+              <div style="display:flex; gap:1rem;">
+                <a href="navigation.html" class="btn btn-emergency btn-lg" id="btn-navigate-patient">
+                  🧭 NAVIGATE TO PATIENT
+                </a>
+                <button type="button" class="btn btn-success btn-lg" id="btn-patient-picked-up">
+                  ✓ PATIENT PICKED UP
+                </button>
+                <a href="hospitals.html" class="btn btn-emergency btn-lg" id="btn-select-hospital" style="display:none;">
+                  🏥 SELECT HOSPITAL →
+                </a>
+              </div>
+
+              <a href="tel:+15552348901" class="btn btn-secondary">
+                📞 Call Caller (Sarah Jenkins)
+              </a>
+            </div>
+          </div>
+
+          <!-- Route Map -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="card-header" style="margin:1rem 1.25rem 0; padding-bottom:0.75rem;">
+              <div class="card-title">
+                <span>🗺️ Live Mission Map & Route</span>
+              </div>
+              <span class="badge badge-demo">GPS TELEMETRY</span>
+            </div>
+            <div id="driver-active-map" style="width:100%; height:450px; background:#e5e9ec;"></div>
+          </div>
+
+        </div>
+
+        <!-- No Active Mission State -->
+        <div id="no-active-emergency-view" class="card" style="display:none; text-align:center; padding:3.5rem 1.5rem;">
+          <div style="font-size:3rem; margin-bottom:1rem;">⚡</div>
+          <h3>No Active Mission</h3>
+          <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Accept an emergency call from the requests queue to open mission controls.</p>
+          <a href="requests.html" class="btn btn-emergency">View Requests Queue</a>
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="requests.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚨</span>
+          <span>Requests</span>
+        </a>
+        <a href="active-emergency.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">⚡</span>
+          <span>Active</span>
+        </a>
+        <a href="navigation.html" class="mobile-nav-item">
+          <span class="mobile-icon">🧭</span>
+          <span>HUD</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/driver.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('DRIVER');
+    });
+  </script>
+</body>
+</html>

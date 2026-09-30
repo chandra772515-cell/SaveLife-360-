@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incoming Ambulance Triage Intake | SaveLife 360</title>
+  <meta name="description" content="Hospital Emergency Intake Console - Review inbound ambulances, clinical severity, and accept cases or route to specialty centers.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon" style="background:#2E7D32;">🏥</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Hospital Command</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge hospital">🏥 Hospital Office</span>
+        <span class="badge badge-critical" style="font-size:0.68rem;">INTAKE TRIAGE</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Intake</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="incoming.html" class="sidebar-link active">
+            <span class="menu-icon">🚑</span>
+            <span>Incoming Ambulances</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="beds.html" class="sidebar-link">
+            <span class="menu-icon">🛏️</span>
+            <span>Bed Availability</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="emergency-department.html" class="sidebar-link">
+            <span class="menu-icon">🩺</span>
+            <span>Emergency Department</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="patients.html" class="sidebar-link">
+            <span class="menu-icon">🔒</span>
+            <span>Patient Records</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Admission History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Inbound Ambulance Case Review</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Tools
+          </button>
+        </div>
+      </header>
+
+      <div class="page-container" style="max-width: 920px; margin: 0 auto;">
+        
+        <!-- Live Incoming Ambulance Case Container (populated dynamically via js/hospital.js) -->
+        <div id="incoming-case-container">
+          <!-- Dynamically populated per Sections 19 & 20 -->
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="incoming-case-empty" class="card" style="display:none; text-align:center; padding:3.5rem 1.5rem;">
+          <div style="font-size:3rem; margin-bottom:1rem;">🚑</div>
+          <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">No Inbound Ambulances Currently En Route</h2>
+          <p style="color:var(--text-secondary); max-width:480px; margin:0 auto 1.5rem;">
+            Your emergency department is actively monitoring regional dispatches. When an ambulance routes towards Metro Health Central Hospital, clinical vitals and preparation checklists will appear here automatically.
+          </p>
+          <button class="btn btn-emergency btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            🚨 Trigger Emergency Dispatch (Demo Mode)
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="incoming.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🚑</span>
+          <span>Incoming</span>
+        </a>
+        <a href="beds.html" class="mobile-nav-item">
+          <span class="mobile-icon">🛏️</span>
+          <span>Beds</span>
+        </a>
+        <a href="patients.html" class="mobile-nav-item">
+          <span class="mobile-icon">🔒</span>
+          <span>Patients</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/hospital.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('HOSPITAL');
+    });
+  </script>
+</body>
+</html>

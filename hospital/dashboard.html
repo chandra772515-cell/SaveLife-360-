@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Emergency Command Center | SaveLife 360</title>
+  <meta name="description" content="Hospital Emergency Office Command Center - Track incoming ambulances, manage emergency bed capacity, and prepare trauma bays.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon" style="background:#2E7D32;">🏥</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Hospital Command</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge hospital">🏥 Hospital Office</span>
+        <span id="hospital-status-badge" class="badge badge-success" style="font-size:0.68rem;">
+          <span class="status-dot pulse"></span> ACCEPTING
+        </span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Intake</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link active">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="incoming.html" class="sidebar-link">
+            <span class="menu-icon">🚑</span>
+            <span>Incoming Ambulances</span>
+            <span class="sidebar-badge" id="dash-incoming-count">1</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="beds.html" class="sidebar-link">
+            <span class="menu-icon">🛏️</span>
+            <span>Bed Availability</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="emergency-department.html" class="sidebar-link">
+            <span class="menu-icon">🩺</span>
+            <span>Emergency Department</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="patients.html" class="sidebar-link">
+            <span class="menu-icon">🔒</span>
+            <span>Patient Records</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Admission History</span>
+          </a>
+        </li>
+
+        <li class="menu-category-title">System</li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" onclick="window.SaveLifeMain.openDemoModal(); return false;">
+            <span class="menu-icon">🔔</span>
+            <span>Notifications</span>
+            <span class="notification-unread-count sidebar-badge">1</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="user-avatar-circle auth-user-avatar" style="background:#E8F5E9; color:#1B5E20;">E</div>
+          <div class="user-mini-info">
+            <h5 class="auth-user-name">Dr. Evelyn Reed</h5>
+            <span class="auth-user-role">Metro Central ER Lead</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <button class="btn btn-secondary btn-sm sidebar-toggle-btn" style="display:none;" title="Toggle Menu">☰</button>
+          <h1>Emergency Trauma Command</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Hospital Intake Status Selector (Accepting / Limited / Not Accepting) -->
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <label style="font-size:0.8rem; font-weight:700; color:var(--text-secondary);">Intake Status:</label>
+            <select id="hospital-intake-status-select" class="form-select" style="padding:0.4rem 0.8rem; font-size:0.85rem; font-weight:700;">
+              <option value="ACCEPTING">🟢 ACCEPTING EMERGENCIES</option>
+              <option value="LIMITED">🟠 LIMITED CAPACITY</option>
+              <option value="NOT_ACCEPTING">🔴 NOT ACCEPTING</option>
+            </select>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Tools
+          </button>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Hospital Facility Banner -->
+        <div class="card" style="margin-bottom: 2rem; background:#FFFFFF; border-left:4px solid var(--success);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.25rem;">
+            <div style="display:flex; align-items:center; gap:1.25rem;">
+              <div style="width:52px; height:52px; border-radius:var(--radius-md); background:#E8F5E9; color:var(--success); display:flex; align-items:center; justify-content:center; font-size:1.8rem;">
+                🏥
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                  <h3 style="font-size:1.25rem;">Metro Health Central Hospital</h3>
+                  <span class="badge badge-success">✓ LEVEL 1 TRAUMA</span>
+                </div>
+                <p style="font-size:0.85rem; color:var(--text-secondary);">
+                  450 Healthcare Boulevard, Metro Central &bull; 24/7 Cardiac Cath Lab & Stroke Unit Active
+                </p>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:0.5rem;">
+              <a href="beds.html" class="btn btn-secondary btn-sm">🛏️ Manage Beds</a>
+              <a href="incoming.html" class="btn btn-emergency btn-sm">🚨 Incoming Triage</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Incoming Ambulance Alert Banner (Dynamic) -->
+        <div id="dash-incoming-banner" class="card" style="border: 2px solid var(--critical); margin-bottom: 2rem; box-shadow: var(--shadow-md); background: #FFFBFB;">
+          <div class="card-header" style="border-bottom-color: rgba(211,47,47,0.15);">
+            <div class="card-title text-critical">
+              <span class="status-dot pulse"></span>
+              <span>INCOMING AMBULANCE ALERT &bull; RESUSCITATION BAY PREPARATION</span>
+            </div>
+            <span id="dash-incoming-level" class="badge badge-critical">CRITICAL</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Condition</span>
+              <h4 id="dash-incoming-type" style="font-size:1.15rem; color:var(--text-primary); margin-top:0.2rem;">Breathing Emergency</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Estimated Arrival</span>
+              <h4 id="dash-incoming-eta" style="font-size:1.6rem; font-weight:800; color:var(--critical); margin-top:0.2rem;">7 min</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Responding Unit</span>
+              <p style="font-size:0.9rem; font-weight:700; margin-top:0.2rem;">Unit AMB-704-CR (ACLS Paramedics)</p>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Bay Assignment</span>
+              <p style="font-size:0.9rem; font-weight:700; color:var(--success); margin-top:0.2rem;">Trauma Bay 1 (Standing By)</p>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <span style="font-size:0.85rem; color:var(--text-secondary);">
+              Review full patient vitals and accept or redirect case in incoming queue.
+            </span>
+            <a href="incoming.html" class="btn btn-emergency">
+              Review & Accept Incoming Case →
+            </a>
+          </div>
+        </div>
+
+        <!-- Metric Stat Cards -->
+        <div class="stats-grid">
+          
+          <div class="stat-widget">
+            <div class="stat-icon-square critical">🛏️</div>
+            <div class="stat-details">
+              <h4 id="dash-er-beds">6</h4>
+              <p>ER Resuscitation Beds Open</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square warning">🏥</div>
+            <div class="stat-details">
+              <h4 id="dash-icu-beds">3</h4>
+              <p>ICU Critical Beds Available</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square success">👨‍⚕️</div>
+            <div class="stat-details">
+              <h4 id="dash-doctors-count">8</h4>
+              <p>ER Trauma Doctors on Shift</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square info">📋</div>
+            <div class="stat-details">
+              <h4>24 / 24</h4>
+              <p>Cath Lab & CT Scanners Ready</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Two Column Hospital Overview -->
+        <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:1.75rem;">
+          
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>🩺 Emergency Department Triage Bays</span>
+              </div>
+              <a href="emergency-department.html" style="font-size:0.85rem; color:var(--primary-accent); font-weight:600;">Full Roster →</a>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <strong>Trauma Bay 1 (Cardiac / Resuscitation)</strong>
+                  <p style="font-size:0.78rem; color:var(--text-secondary);">Ventilator, Defibrillator, Video Laryngoscope</p>
+                </div>
+                <span class="badge badge-success">RESERVED FOR INCOMING</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <strong>Trauma Bay 2 (General Emergency)</strong>
+                  <p style="font-size:0.78rem; color:var(--text-secondary);">Rapid Infuser, Suction, Chest Tube Kit</p>
+                </div>
+                <span class="badge badge-success">AVAILABLE</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <strong>Trauma Bay 3 (Pediatric Resuscitation)</strong>
+                  <p style="font-size:0.78rem; color:var(--text-secondary);">Pediatric Warmer & Infusion System</p>
+                </div>
+                <span class="badge badge-success">AVAILABLE</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:0.6rem 0;">
+                <div>
+                  <strong>Trauma Bay 4 (Surgical Intervention)</strong>
+                  <p style="font-size:0.78rem; color:var(--text-secondary);">Currently sanitizing post-procedure</p>
+                </div>
+                <span class="badge badge-high">TURNOVER (10 MIN)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>🔔 Intake Radio Notifications</span>
+              </div>
+              <span class="badge badge-demo">DISPATCH FEED</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.85rem;">
+              <div style="background:var(--bg-muted); padding:0.75rem 1rem; border-radius:var(--radius-sm); font-size:0.825rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.2rem;">
+                  <strong style="color:var(--critical);">🚨 Inbound ACLS:</strong>
+                  <span style="color:var(--text-muted);">2m ago</span>
+                </div>
+                <span>AMB-704-CR en route with severe dyspnea case. ETA ~7 min.</span>
+              </div>
+              <div style="background:var(--bg-muted); padding:0.75rem 1rem; border-radius:var(--radius-sm); font-size:0.825rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.2rem;">
+                  <strong style="color:var(--info);">Blood Bank:</strong>
+                  <span style="color:var(--text-muted);">18m ago</span>
+                </div>
+                <span>12 units of O-Negative packed RBCs available for trauma release.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item active">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="incoming.html" class="mobile-nav-item" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🚑</span>
+          <span>Incoming</span>
+        </a>
+        <a href="beds.html" class="mobile-nav-item">
+          <span class="mobile-icon">🛏️</span>
+          <span>Beds</span>
+        </a>
+        <a href="patients.html" class="mobile-nav-item">
+          <span class="mobile-icon">🔒</span>
+          <span>Patients</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/hospital.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('HOSPITAL');
+    });
+  </script>
+</body>
+</html>

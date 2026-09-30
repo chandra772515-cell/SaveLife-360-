@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Dispatch Dashboard | SaveLife 360</title>
+  <meta name="description" content="SaveLife 360 Ambulance Driver Dispatch Console - Respond to emergencies, navigate to patients, and coordinate hospital admissions.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Driver Dispatch</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge driver">🚑 Verified Driver</span>
+        <span id="driver-status-badge" class="badge badge-success" style="font-size:0.68rem;">
+          <span class="status-dot pulse"></span> ONLINE
+        </span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Dispatch Operations</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link active">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="requests.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>New Requests</span>
+            <span class="sidebar-badge" id="driver-new-requests-count">1</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="active-emergency.html" class="sidebar-link">
+            <span class="menu-icon">⚡</span>
+            <span>Active Emergency</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="navigation.html" class="sidebar-link">
+            <span class="menu-icon">🧭</span>
+            <span>Navigation HUD</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Selection</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Trip History</span>
+          </a>
+        </li>
+
+        <li class="menu-category-title">Driver System</li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" onclick="window.SaveLifeMain.openDemoModal(); return false;">
+            <span class="menu-icon">🔔</span>
+            <span>Notifications</span>
+            <span class="notification-unread-count sidebar-badge">1</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" onclick="alert('Driver Credentials:\nName: Marcus Vance\nLicense: DL-9948201-X\nVehicle: AMB-704-CR\nFleet: Metro Rapid Medical\nStatus: VERIFIED'); return false;">
+            <span class="menu-icon">👤</span>
+            <span>Profile & Vehicle</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="user-avatar-circle auth-user-avatar" style="background:#FFF3E0; color:#E65100;">M</div>
+          <div class="user-mini-info">
+            <h5 class="auth-user-name">Marcus Vance</h5>
+            <span class="auth-user-role">Unit AMB-704-CR</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <button class="btn btn-secondary btn-sm sidebar-toggle-btn" style="display:none;" title="Toggle Menu">☰</button>
+          <h1>Driver Operations Console</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" id="driver-status-toggle">
+            Go Offline
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Tools
+          </button>
+          <a href="requests.html" class="btn btn-emergency btn-sm">
+            🚨 Incoming Calls
+          </a>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Driver Registration & Verification Banner -->
+        <div class="card" style="margin-bottom:2rem; background:#FFFFFF; border-left:4px solid var(--success);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1.25rem;">
+            <div style="display:flex; align-items:center; gap:1.25rem;">
+              <div style="width:52px; height:52px; border-radius:var(--radius-md); background:#EDF7ED; color:var(--success); display:flex; align-items:center; justify-content:center; font-size:1.8rem;">
+                🚑
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                  <h3 style="font-size:1.2rem;">Marcus Vance</h3>
+                  <span class="badge badge-success">✓ VERIFIED DRIVER</span>
+                </div>
+                <div style="display:flex; gap:1rem; font-size:0.825rem; color:var(--text-secondary); flex-wrap:wrap;">
+                  <span>Vehicle: <strong>AMB-704-CR (ACLS)</strong></span>
+                  <span>License: <strong>DL-9948201-X</strong></span>
+                  <span>Organization: <strong>Metro Rapid Medical Services</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <span class="badge badge-demo">AUTHORIZED RESPONDER</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Cards Grid -->
+        <div class="stats-grid">
+          
+          <div class="stat-widget">
+            <div class="stat-icon-square critical">🚨</div>
+            <div class="stat-details">
+              <h4>1</h4>
+              <p>Active Task Dispatched</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square success">⏱️</div>
+            <div class="stat-details">
+              <h4>5.8 min</h4>
+              <p>Today's Avg Response Time</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square info">📍</div>
+            <div class="stat-details">
+              <h4>6 Trips</h4>
+              <p>Completed This Shift</p>
+            </div>
+          </div>
+
+          <div class="stat-widget">
+            <div class="stat-icon-square warning">⭐</div>
+            <div class="stat-details">
+              <h4>4.9 / 5.0</h4>
+              <p>Fleet Performance Rating</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Active Task Card -->
+        <div id="driver-active-task-card" class="card" style="border: 2px solid var(--critical); margin-bottom: 2rem; box-shadow: var(--shadow-md);">
+          <div class="card-header" style="border-bottom-color: rgba(211,47,47,0.15);">
+            <div class="card-title text-critical">
+              <span class="status-dot pulse"></span>
+              <span>CURRENT DISPATCH ASSIGNMENT</span>
+            </div>
+            <span id="task-emg-level" class="badge badge-critical">CRITICAL</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Condition</span>
+              <h4 id="task-emg-type" style="font-size:1.15rem; color:var(--text-primary); margin-top:0.2rem;">Breathing Emergency</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Mission Status</span>
+              <h4 id="task-emg-status" style="font-size:1.15rem; color:var(--primary-accent); margin-top:0.2rem;">DRIVER EN ROUTE</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Estimated Arrival</span>
+              <h4 id="task-emg-eta" style="font-size:1.6rem; font-weight:800; color:var(--critical); margin-top:0.2rem;">5 min</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Pickup Address</span>
+              <p id="task-emg-address" style="font-size:0.85rem; font-weight:700; margin-top:0.2rem;">742 Evergreen Terrace, Sector 4</p>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <a href="active-emergency.html" class="btn btn-emergency btn-lg">
+              ⚡ Manage Active Emergency & Hospital →
+            </a>
+            <a href="navigation.html" class="btn btn-secondary btn-lg">
+              🧭 Open Turn-by-Turn Navigation HUD
+            </a>
+          </div>
+        </div>
+
+        <!-- No Task Card -->
+        <div id="driver-no-task-card" class="card" style="display:none; text-align:center; padding:3rem; margin-bottom:2rem;">
+          <div style="font-size:2.5rem; margin-bottom:0.75rem;">🟢</div>
+          <h3>You Are Standing By</h3>
+          <p style="color:var(--text-secondary); margin-bottom:1rem;">You are marked ONLINE. You will receive an immediate siren alert when an emergency call is assigned to your quadrant.</p>
+          <a href="requests.html" class="btn btn-secondary btn-sm">Check Incoming Requests Queue</a>
+        </div>
+
+        <!-- Two Column Section: Quick Actions & Radio Dispatch -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.75rem;">
+          
+          <div class="card">
+            <h3 style="font-size:1.15rem; margin-bottom:1rem;">🚑 Vehicle Fleet Readiness</h3>
+            <div style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.875rem;">
+              <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border-color);">
+                <span>Oxygen Cylinders (Primary & Portable):</span>
+                <strong style="color:var(--success);">Full (98%)</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border-color);">
+                <span>Defibrillator & ECG Telemetry Unit:</span>
+                <strong style="color:var(--success);">Calibrated & Ready</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:0.5rem 0; border-bottom:1px solid var(--border-color);">
+                <span>Fuel Level & Engine Diagnostics:</span>
+                <strong>84% &bull; All Systems Nominal</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between; padding:0.5rem 0;">
+                <span>Siren & Emergency Light Beacons:</span>
+                <strong style="color:var(--success);">Operational</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size:1.15rem; margin-bottom:1rem;">📡 Central Dispatch Radio Feed</h3>
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div style="background:var(--bg-muted); padding:0.75rem 1rem; border-radius:var(--radius-sm); font-size:0.825rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.2rem;">
+                  <strong style="color:var(--primary-accent);">Dispatch Central:</strong>
+                  <span style="color:var(--text-muted);">2m ago</span>
+                </div>
+                <span>Green corridor coordinated along West Parkway with traffic police.</span>
+              </div>
+              <div style="background:var(--bg-muted); padding:0.75rem 1rem; border-radius:var(--radius-sm); font-size:0.825rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.2rem;">
+                  <strong style="color:var(--success);">Metro Central ER:</strong>
+                  <span style="color:var(--text-muted);">8m ago</span>
+                </div>
+                <span>Trauma Bay 1 ready for incoming cardiac & respiratory admissions.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item active">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="requests.html" class="mobile-nav-item" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🚨</span>
+          <span>Requests</span>
+        </a>
+        <a href="active-emergency.html" class="mobile-nav-item">
+          <span class="mobile-icon">⚡</span>
+          <span>Active</span>
+        </a>
+        <a href="navigation.html" class="mobile-nav-item">
+          <span class="mobile-icon">🧭</span>
+          <span>HUD</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/driver.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('DRIVER');
+    });
+  </script>
+</body>
+</html>

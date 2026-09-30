@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaveLife 360 | Emergency Ambulance & Hospital Coordination Platform</title>
+  <meta name="description" content="SaveLife 360 connects citizens, emergency ambulances, and hospital trauma centers in real-time to eliminate critical delays. Every Second Matters.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <!-- Navigation Bar -->
+  <header class="landing-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo" id="logo-link">
+        <div class="logo-icon">🚑</div>
+        <div>
+          <span>SaveLife 360</span>
+          <span class="tagline-sub">Every Second Matters</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#features">Key Features</a></li>
+          <li><a href="#portals">Three Portals</a></li>
+          <li><a href="#journey">Emergency Journey</a></li>
+          <li><a href="public/hospitals.html">Hospital Network</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="tel:108" class="emergency-phone-tag" id="btn-call-emergency">
+          <span>📞</span> Call 108 / 911
+        </a>
+        <a href="login.html" class="btn btn-secondary btn-sm" id="btn-nav-login">
+          Sign In / Portals
+        </a>
+        <a href="public/request-ambulance.html" class="btn btn-emergency btn-sm" id="btn-nav-request">
+          🚨 Request Help
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <!-- Hero Text -->
+          <div class="hero-content">
+            <div class="hero-badge">
+              <span class="status-dot pulse" style="color:var(--primary-accent);"></span>
+              <span>Unified Emergency Response Infrastructure</span>
+            </div>
+
+            <h1 class="hero-title">
+              SaveLife 360<br>
+              <span class="highlight">Every Second Matters.</span>
+            </h1>
+
+            <p class="hero-tagline">
+              Connecting people, ambulances and hospitals for faster emergency response.
+            </p>
+
+            <p class="hero-description">
+              A synchronized healthcare-tech emergency platform engineered to eliminate dispatch bottlenecks, provide live telemetry, and reserve hospital trauma bays before patient arrival.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="public/request-ambulance.html" class="btn btn-emergency btn-lg" id="hero-btn-request">
+                🚨 REQUEST AMBULANCE
+              </a>
+              <a href="#how-it-works" class="btn btn-secondary btn-lg" id="hero-btn-how">
+                HOW IT WORKS
+              </a>
+            </div>
+
+            <div class="hero-stats-row">
+              <div class="stat-item">
+                <h4 style="color:var(--primary-accent);">7.2 min</h4>
+                <p>Avg. Response Time</p>
+              </div>
+              <div class="stat-item">
+                <h4>420+</h4>
+                <p>Connected Ambulances</p>
+              </div>
+              <div class="stat-item">
+                <h4>185+</h4>
+                <p>Verified Hospital ERs</p>
+              </div>
+              <div class="stat-item">
+                <h4>99.8%</h4>
+                <p>Dispatch Accuracy</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Visual: Real-time Emergency Radar & Telemetry Card -->
+          <div class="hero-visual-card">
+            <div class="radar-header">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <span class="status-dot pulse" style="color:var(--critical);"></span>
+                <span style="font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.04em;">
+                  Live Emergency Fleet Radar
+                </span>
+              </div>
+              <span class="badge badge-demo">DEMO DATA</span>
+            </div>
+
+            <div class="radar-canvas-wrap" id="hero-radar-canvas-container">
+              <!-- Rendered via SaveLifeMap radar engine -->
+              <div class="radar-overlay-eta">
+                <span>⏱️ Nearest Unit ETA: <strong>4 min</strong></span>
+              </div>
+              <div class="radar-overlay-badge">
+                <span>📍 Sector 4 Central &bull; 8 Units Active</span>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:0.75rem; margin-top:1.25rem; text-align:center; font-size:0.8rem;">
+              <div style="background:var(--bg-muted); padding:0.6rem; border-radius:var(--radius-sm);">
+                <div style="color:var(--text-secondary);">Traffic Impact</div>
+                <strong style="color:var(--success);">Optimal Green Corridor</strong>
+              </div>
+              <div style="background:var(--bg-muted); padding:0.6rem; border-radius:var(--radius-sm);">
+                <div style="color:var(--text-secondary);">ACLS Units</div>
+                <strong style="color:var(--text-primary);">14 Standing By</strong>
+              </div>
+              <div style="background:var(--bg-muted); padding:0.6rem; border-radius:var(--radius-sm);">
+                <div style="color:var(--text-secondary);">ER Beds Ready</div>
+                <strong style="color:var(--text-primary);">38 Open in City</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="section section-muted" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Synchronized Workflow</span>
+          <h2 class="section-title">How SaveLife 360 Works</h2>
+          <p class="section-desc">
+            Bridging the communication gap between citizens in distress, emergency ambulance drivers on the road, and hospital trauma centers.
+          </p>
+        </div>
+
+        <div class="flow-diagram-container">
+          
+          <!-- Step 1: Public -->
+          <div class="flow-card step-1">
+            <span class="flow-step-number">STEP 01</span>
+            <div class="flow-icon-circle">👤</div>
+            <h3 style="margin-bottom:0.6rem;">1. Citizen Requests</h3>
+            <p style="font-size:0.925rem; color:var(--text-secondary);">
+              GPS coordinates are detected instantly with one click. Citizen specifies emergency type (Accident, Cardiac, Breathing) to mobilize specialized life-support equipment.
+            </p>
+            <div class="flow-arrow-indicator">➔</div>
+          </div>
+
+          <!-- Step 2: Ambulance -->
+          <div class="flow-card step-2">
+            <span class="flow-step-number">STEP 02</span>
+            <div class="flow-icon-circle">🚑</div>
+            <h3 style="margin-bottom:0.6rem;">2. Ambulance Dispatched</h3>
+            <p style="font-size:0.925rem; color:var(--text-secondary);">
+              Nearest certified driver receives turn-by-turn navigation HUD and accepts. Live tracking and approaching road alerts broadcast to traffic. Paramedics secure patient.
+            </p>
+            <div class="flow-arrow-indicator">➔</div>
+          </div>
+
+          <!-- Step 3: Hospital -->
+          <div class="flow-card step-3">
+            <span class="flow-step-number">STEP 03</span>
+            <div class="flow-icon-circle">🏥</div>
+            <h3 style="margin-bottom:0.6rem;">3. Hospital Prepares</h3>
+            <p style="font-size:0.925rem; color:var(--text-secondary);">
+              Hospital ER receives vitals and incoming ETA before arrival. Emergency beds, doctors and surgical suites are reserved and ready when the ambulance arrives.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Engineered for Rapid Response</span>
+          <h2 class="section-title">Key Capabilities</h2>
+          <p class="section-desc">
+            Modern technologies built to eliminate delays at every stage of medical transportation.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:var(--primary-accent); background:#FFEBEE;">🚑</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Ambulance Tracking</h3>
+            <p style="font-size:0.9rem;">
+              Real-time GPS tracking with continuous speed, heading, and distance calculation for zero guesswork.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:var(--high-emergency); background:#FFF3E0;">📍</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Live Location Detection</h3>
+            <p style="font-size:0.9rem;">
+              Browser Geolocation API pinpointing patient pickup locations down to street address level in seconds.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:var(--info); background:#E1F5FE;">🗺️</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Route Optimization</h3>
+            <p style="font-size:0.9rem;">
+              Intelligent hospital selection matching patient clinical condition with nearest capable ER facilities.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:var(--critical); background:#FDEDED;">🚨</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Emergency Road Alerts</h3>
+            <p style="font-size:0.9rem;">
+              Surrounding vehicles receive safe right-of-way proximity warnings to clear congestion ahead of ambulances.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:var(--success); background:#EDF7ED;">🏥</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Hospital Availability</h3>
+            <p style="font-size:0.9rem;">
+              Transparent, live counts of emergency department beds, ICU availability, and on-duty surgical teams.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap" style="color:#7B1FA2; background:#F3E5F5;">🔔</div>
+            <h3 style="margin-bottom:0.5rem; font-size:1.15rem;">Real-Time Notifications</h3>
+            <p style="font-size:0.9rem;">
+              In-app audio sirens, live status timeline shifts, and synchronized alerts keeping all stakeholders aligned.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Three Portals Section -->
+    <section class="section section-muted" id="portals">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Dedicated Ecosystem</span>
+          <h2 class="section-title">Three Specialized Portals</h2>
+          <p class="section-desc">
+            Tailored user experiences designed for distinct roles during medical emergencies.
+          </p>
+        </div>
+
+        <div class="portals-grid">
+          
+          <!-- Public Portal -->
+          <div class="portal-entry-card public">
+            <div class="portal-top-role">
+              <div class="portal-avatar">👤</div>
+              <div>
+                <span class="role-tag-badge public">Citizen / Caller</span>
+                <h3 style="font-size:1.3rem; margin-top:0.2rem;">Public Portal</h3>
+              </div>
+            </div>
+            <p style="font-size:0.95rem; color:var(--text-secondary);">
+              Request and track an ambulance with live ETA countdowns, driver contact, and status updates.
+            </p>
+            <ul class="portal-features-list">
+              <li>Instant 1-Click GPS SOS dispatch</li>
+              <li>5-Step Emergency categorization</li>
+              <li>Live moving map & road alerts</li>
+              <li>Emergency historical records</li>
+            </ul>
+            <a href="public/dashboard.html" class="btn btn-secondary btn-block">Enter Public Portal</a>
+          </div>
+
+          <!-- Driver Portal -->
+          <div class="portal-entry-card driver">
+            <div class="portal-top-role">
+              <div class="portal-avatar">🚑</div>
+              <div>
+                <span class="role-tag-badge driver">Verified Paramedic</span>
+                <h3 style="font-size:1.3rem; margin-top:0.2rem;">Ambulance Driver</h3>
+              </div>
+            </div>
+            <p style="font-size:0.95rem; color:var(--text-secondary);">
+              Receive emergency requests, accept dispatches, navigate to patients, and select available hospitals.
+            </p>
+            <ul class="portal-features-list">
+              <li>Verified driver status & registration</li>
+              <li>Live accept/decline audio radar alert</li>
+              <li>Turn-by-turn navigation HUD</li>
+              <li>Hospital capacity comparison</li>
+            </ul>
+            <a href="driver/dashboard.html" class="btn btn-secondary btn-block">Enter Driver Portal</a>
+          </div>
+
+          <!-- Hospital Office -->
+          <div class="portal-entry-card hospital">
+            <div class="portal-top-role">
+              <div class="portal-avatar">🏥</div>
+              <div>
+                <span class="role-tag-badge hospital">Trauma Center Staff</span>
+                <h3 style="font-size:1.3rem; margin-top:0.2rem;">Hospital Office</h3>
+              </div>
+            </div>
+            <p style="font-size:0.95rem; color:var(--text-secondary);">
+              Receive incoming ambulance cases, verify emergency bed readiness, and accept or reroute patients.
+            </p>
+            <ul class="portal-features-list">
+              <li>Live incoming ambulance triage alert</li>
+              <li>1-Click Accept Case & Reserve Bay</li>
+              <li>Real-time ER & ICU bed controls</li>
+              <li>Secure clinical patient intake records</li>
+            </ul>
+            <a href="hospital/dashboard.html" class="btn btn-secondary btn-block">Enter Hospital Portal</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Emergency Journey Timeline Section -->
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">End-to-End Coordination</span>
+          <h2 class="section-title">The Complete Emergency Journey</h2>
+          <p class="section-desc">
+            Seamless state machine tracking every milestone from the initial call to patient delivery.
+          </p>
+        </div>
+
+        <div class="journey-timeline-card">
+          <div class="journey-steps-track">
+            
+            <div class="journey-node active">
+              <div class="journey-node-dot">1</div>
+              <h5>Emergency</h5>
+              <p>GPS detected & broadcast</p>
+            </div>
+
+            <div class="journey-node active">
+              <div class="journey-node-dot">2</div>
+              <h5>Ambulance Assigned</h5>
+              <p>Nearest unit dispatched</p>
+            </div>
+
+            <div class="journey-node active">
+              <div class="journey-node-dot">3</div>
+              <h5>Patient Pickup</h5>
+              <p>On-board care initiated</p>
+            </div>
+
+            <div class="journey-node active">
+              <div class="journey-node-dot">4</div>
+              <h5>Hospital Selected</h5>
+              <p>Matched by specialty</p>
+            </div>
+
+            <div class="journey-node active">
+              <div class="journey-node-dot">5</div>
+              <h5>Hospital Prepared</h5>
+              <p>Trauma bay reserved</p>
+            </div>
+
+            <div class="journey-node active">
+              <div class="journey-node-dot">6</div>
+              <h5>Patient Arrival</h5>
+              <p>Zero triage waiting delay</p>
+            </div>
+
+          </div>
+
+          <div style="background:var(--bg-muted); border-radius:var(--radius-md); padding:1.25rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span style="font-weight:700; color:var(--text-primary);">Experience the complete end-to-end simulation in Demo Mode:</span>
+              <p style="font-size:0.85rem; color:var(--text-secondary);">Watch changes sync in real-time across citizen, driver, and hospital screens.</p>
+            </div>
+            <div style="display:flex; gap:0.75rem;">
+              <a href="login.html" class="btn btn-secondary btn-sm">Role Selector</a>
+              <a href="public/request-ambulance.html" class="btn btn-emergency btn-sm">Start Emergency Flow</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Ambulance Road Alert Banner Preview -->
+    <section class="section" style="padding-top:0;">
+      <div class="container">
+        <div class="road-alert-banner">
+          <div class="road-alert-icon-wrap">🚨</div>
+          <div style="flex-grow:1;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+              <h3 style="font-size:1.25rem; color:#856404; font-weight:800;">Emergency Ambulance Approaching</h3>
+              <span class="badge badge-demo">ROAD SAFETY PROTOCOL</span>
+            </div>
+            <p style="font-size:0.95rem; color:#533f03;">
+              <strong>An emergency ambulance is approaching your route. Please slow down and give way safely.</strong>
+            </p>
+            <p style="font-size:0.8rem; color:#856404; margin-top:0.4rem;">
+              Simulated demonstration feature: Proximity broadcasts protect patient privacy (no medical data disclosed) while clearing roadways.
+            </p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.showRoadAlertBanner();">
+            Preview Alert
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <div class="brand-logo" style="margin-bottom:0.75rem;">
+            <div class="logo-icon">🚑</div>
+            <div>
+              <span>SaveLife 360</span>
+              <span class="tagline-sub">Every Second Matters</span>
+            </div>
+          </div>
+          <p>
+            Connecting people, ambulances and hospitals to make emergency transportation faster, coordinated, and life-saving.
+          </p>
+          <span class="badge badge-demo">PROTOTYPE &bull; DEMO MODE</span>
+        </div>
+
+        <div class="footer-col">
+          <h4>Platform Portals</h4>
+          <ul class="footer-links">
+            <li><a href="public/dashboard.html">Public Citizen Portal</a></li>
+            <li><a href="driver/dashboard.html">Ambulance Driver Portal</a></li>
+            <li><a href="hospital/dashboard.html">Hospital Emergency Office</a></li>
+            <li><a href="login.html">Role Switcher & Login</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Emergency Actions</h4>
+          <ul class="footer-links">
+            <li><a href="public/request-ambulance.html">Request Ambulance</a></li>
+            <li><a href="public/tracking.html">Live Ambulance Tracking</a></li>
+            <li><a href="public/hospitals.html">Nearby Hospital Directory</a></li>
+            <li><a href="public/history.html">Emergency History</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Emergency Helplines</h4>
+          <p style="font-size:0.85rem; margin-bottom:0.75rem;">
+            For immediate life-threatening events, always dial your primary government emergency services:
+          </p>
+          <div style="display:flex; flex-direction:column; gap:0.4rem;">
+            <span style="font-weight:700; color:var(--critical);">🚑 National Ambulance: 108 / 911</span>
+            <span style="font-weight:600; color:var(--text-secondary);">📞 Police Dispatch: 100 / 999</span>
+            <span style="font-weight:600; color:var(--text-secondary);">🚒 Fire Rescue: 101</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 SaveLife 360 Emergency Response Platform. All rights reserved.</span>
+        <span>Color Specification: Primary Background #FAF7E4</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/main.js"></script>
+
+  <script>
+    // Initialize hero radar canvas preview
+    document.addEventListener('DOMContentLoaded', () => {
+      new window.SaveLifeMap('hero-radar-canvas-container', { isHeroRadar: true });
+    });
+  </script>
+</body>
+</html>

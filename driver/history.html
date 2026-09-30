@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Mission Logbook | SaveLife 360</title>
+  <meta name="description" content="Driver emergency transport logbook and shift performance metrics.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Driver Dispatch</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge driver">🚑 Verified Driver</span>
+        <span class="badge badge-info" style="font-size:0.68rem;">LOGBOOK</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Dispatch Operations</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="requests.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>New Requests</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="active-emergency.html" class="sidebar-link">
+            <span class="menu-icon">⚡</span>
+            <span>Active Emergency</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="navigation.html" class="sidebar-link">
+            <span class="menu-icon">🧭</span>
+            <span>Navigation HUD</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Selection</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link active">
+            <span class="menu-icon">📋</span>
+            <span>Trip History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Driver Mission Logbook</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="badge badge-success">342 Lifetime Runs Completed</span>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <div class="data-table-container">
+          <div style="padding:1.25rem 1.5rem; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <h3 style="font-size:1.15rem;">Completed Emergency Missions</h3>
+              <p style="font-size:0.825rem; color:var(--text-secondary);">Verified paramedic transport record for Unit AMB-704-CR</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="alert('Exporting shift trip logs to PDF...');">
+              📥 Export Shift Log
+            </button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Dispatch Ref</th>
+                  <th>Incident Type</th>
+                  <th>Level</th>
+                  <th>Scene Pickup</th>
+                  <th>Delivered Hospital</th>
+                  <th>Response Time</th>
+                  <th>Rating</th>
+                </tr>
+              </thead>
+              <tbody id="driver-history-body">
+                <!-- Populated via js/driver.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="requests.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚨</span>
+          <span>Requests</span>
+        </a>
+        <a href="active-emergency.html" class="mobile-nav-item">
+          <span class="mobile-icon">⚡</span>
+          <span>Active</span>
+        </a>
+        <a href="navigation.html" class="mobile-nav-item">
+          <span class="mobile-icon">🧭</span>
+          <span>HUD</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/driver.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('DRIVER');
+    });
+  </script>
+</body>
+</html>

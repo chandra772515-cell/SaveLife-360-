@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Dashboard | SaveLife 360</title>
+  <meta name="description" content="SaveLife 360 Public Emergency Portal - Fast ambulance requests and real-time response coordination.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Every Second Matters</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge public">👤 Public Citizen</span>
+        <span class="badge badge-success" style="font-size:0.68rem;">READY</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Core</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link active">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="request-ambulance.html" class="sidebar-link" style="color:var(--critical); font-weight:700;">
+            <span class="menu-icon">🚨</span>
+            <span>Request Ambulance</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tracking.html" class="sidebar-link">
+            <span class="menu-icon">🗺️</span>
+            <span>Ambulance Tracking</span>
+            <span class="sidebar-badge" id="sidebar-tracking-badge" style="display:none;">LIVE</span>
+          </a>
+        </li>
+
+        <li class="menu-category-title">Healthcare Network</li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Information</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Emergency History</span>
+          </a>
+        </li>
+
+        <li class="menu-category-title">Account</li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" onclick="window.SaveLifeMain.openDemoModal(); return false;">
+            <span class="menu-icon">🔔</span>
+            <span>Notifications</span>
+            <span class="notification-unread-count sidebar-badge">2</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="#" class="sidebar-link" onclick="alert('Profile: Sarah Jenkins\nContact: +1 (555) 234-8901\nEmergency Contact: Mark Jenkins'); return false;">
+            <span class="menu-icon">👤</span>
+            <span>Profile</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="user-avatar-circle auth-user-avatar">S</div>
+          <div class="user-mini-info">
+            <h5 class="auth-user-name">Sarah Jenkins</h5>
+            <span class="auth-user-role">Public User</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <!-- Topbar -->
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <button class="btn btn-secondary btn-sm sidebar-toggle-btn" style="display:none;" title="Toggle Menu">☰</button>
+          <h1>Emergency Assistance Portal</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="live-indicator">
+            <span class="status-dot pulse" style="color:var(--success);"></span>
+            <span>GPS Satellite Fix: Active</span>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();" title="Demo Controls">
+            ⚙️ Demo Tools
+          </button>
+          <a href="tel:108" class="emergency-phone-tag">
+            <span>📞</span> 108 / 911
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Body Inner -->
+      <div class="page-container">
+        
+        <!-- Giant Prominent Emergency Callout (The most important button) -->
+        <div style="margin-bottom: 2rem;">
+          <a href="request-ambulance.html" class="btn-emergency-huge" id="btn-dashboard-giant-request">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <span style="font-size:2.2rem;">🚨</span>
+              <span>REQUEST AMBULANCE</span>
+            </div>
+            <span class="subtitle">Press here for immediate medical dispatch & GPS localization</span>
+          </a>
+        </div>
+
+        <!-- Current Location Detection Banner -->
+        <div class="card" style="margin-bottom: 2rem; background:#FFFFFF; border-left:4px solid var(--info);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div style="display:flex; align-items:center; gap:1rem;">
+              <div style="width:48px; height:48px; border-radius:50%; background:var(--info-bg); color:var(--info); display:flex; align-items:center; justify-content:center; font-size:1.5rem;">
+                📍
+              </div>
+              <div>
+                <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Current Detected Location:</span>
+                <h4 style="font-size:1.15rem; color:var(--text-primary);" id="dashboard-detected-address">
+                  742 Evergreen Terrace, Sector 4 (Metro Central)
+                </h4>
+              </div>
+            </div>
+            <a href="request-ambulance.html" class="btn btn-secondary btn-sm">Adjust Pin / Address</a>
+          </div>
+        </div>
+
+        <!-- Active Emergency Status Widget (Shown if active emergency exists) -->
+        <div id="active-emergency-card" class="card" style="display:none; border:2px solid var(--critical); margin-bottom:2rem; box-shadow:var(--shadow-md);">
+          <div class="card-header" style="border-bottom-color: rgba(211,47,47,0.15);">
+            <div class="card-title text-critical">
+              <span class="status-dot pulse"></span>
+              <span>Active Emergency Dispatched</span>
+            </div>
+            <span id="active-emg-level" class="badge badge-critical">CRITICAL</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:1.25rem; margin-bottom:1.5rem;">
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Condition</span>
+              <h4 id="active-emg-type" style="font-size:1.1rem; color:var(--text-primary); margin-top:0.2rem;">Breathing Emergency</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Current Status</span>
+              <h4 id="active-emg-status" style="font-size:1.1rem; color:var(--primary-accent); margin-top:0.2rem;">DRIVER EN ROUTE</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Ambulance ETA</span>
+              <h4 id="active-emg-eta" style="font-size:1.5rem; font-weight:800; color:var(--critical); margin-top:0.2rem;">5 mins</h4>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Pickup Spot</span>
+              <p id="active-emg-address" style="font-size:0.85rem; font-weight:600; margin-top:0.2rem;">742 Evergreen Terrace</p>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <span style="font-size:0.85rem; color:var(--text-secondary);">Unit AMB-704-CR (ACLS equipped) has sirens on.</span>
+            <a href="tracking.html" class="btn btn-emergency">
+              🗺️ Open Live Map Tracking →
+            </a>
+          </div>
+        </div>
+
+        <!-- No Emergency State Helper -->
+        <div id="no-emergency-card" class="card" style="margin-bottom:2rem; background:#FFFFFF;">
+          <div style="display:flex; align-items:center; gap:1.25rem;">
+            <div style="font-size:2rem; color:var(--success);">✓</div>
+            <div>
+              <h4 style="font-size:1.05rem;">No Active Emergencies in Progress</h4>
+              <p style="font-size:0.85rem;">When you request an ambulance, live status, ambulance telemetry, and hospital acceptance will display here.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Two-Column Grid: Hospital Availability & Emergency History -->
+        <div style="display:grid; grid-template-columns: 1.2fr 0.8fr; gap:1.75rem;">
+          
+          <!-- Nearby Hospitals Availability -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h3 style="font-size:1.2rem;">🏥 Nearby Hospital Availability</h3>
+              <a href="hospitals.html" style="font-size:0.85rem; color:var(--primary-accent); font-weight:600;">View All (4) →</a>
+            </div>
+
+            <div id="dashboard-hospitals-list">
+              <!-- Populated via js/public.js -->
+            </div>
+          </div>
+
+          <!-- Quick Notifications & Helpline Guide -->
+          <div>
+            <div style="margin-bottom:1rem;">
+              <h3 style="font-size:1.2rem;">🔔 Recent Alerts</h3>
+            </div>
+
+            <div class="card" style="padding:1.25rem; margin-bottom:1.5rem;">
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:flex; gap:0.75rem;">
+                  <span style="font-size:1.2rem;">🚨</span>
+                  <div>
+                    <strong style="font-size:0.875rem;">Unit AMB-704 Dispatched</strong>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">Ambulance en route with paramedic Marcus Vance.</p>
+                    <span style="font-size:0.7rem; color:var(--text-muted);">2 min ago</span>
+                  </div>
+                </div>
+                <div style="display:flex; gap:0.75rem; border-top:1px solid var(--border-color); padding-top:0.75rem;">
+                  <span style="font-size:1.2rem;">🏥</span>
+                  <div>
+                    <strong style="font-size:0.875rem;">Metro Health Central ER Open</strong>
+                    <p style="font-size:0.8rem; color:var(--text-secondary);">6 emergency beds and 3 ICU beds currently ready.</p>
+                    <span style="font-size:0.7rem; color:var(--text-muted);">15 min ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Emergency Safety Tips -->
+            <div class="card" style="background:var(--bg-muted); border:1px solid var(--border-color);">
+              <h4 style="font-size:0.95rem; margin-bottom:0.6rem;">First Responder Reminders:</h4>
+              <ul style="font-size:0.825rem; color:var(--text-secondary); padding-left:1.2rem; line-height:1.5;">
+                <li>Keep the patient calm and warm.</li>
+                <li>Do not move trauma victims unless in immediate danger.</li>
+                <li>Keep the caller's phone line clear for the ambulance driver.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item active">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="request-ambulance.html" class="mobile-nav-item" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🚨</span>
+          <span>Request</span>
+        </a>
+        <a href="tracking.html" class="mobile-nav-item">
+          <span class="mobile-icon">🗺️</span>
+          <span>Track</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/public.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('PUBLIC');
+    });
+  </script>
+</body>
+</html>

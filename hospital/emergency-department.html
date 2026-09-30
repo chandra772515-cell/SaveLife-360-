@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Department Operations | SaveLife 360 Hospital</title>
+  <meta name="description" content="Emergency department status, clinical staff on shift, and medical equipment readiness.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon" style="background:#2E7D32;">🏥</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Hospital Command</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge hospital">🏥 Hospital Office</span>
+        <span class="badge badge-success" style="font-size:0.68rem;">ER READINESS</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Intake</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="incoming.html" class="sidebar-link">
+            <span class="menu-icon">🚑</span>
+            <span>Incoming Ambulances</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="beds.html" class="sidebar-link">
+            <span class="menu-icon">🛏️</span>
+            <span>Bed Availability</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="emergency-department.html" class="sidebar-link active">
+            <span class="menu-icon">🩺</span>
+            <span>Emergency Department</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="patients.html" class="sidebar-link">
+            <span class="menu-icon">🔒</span>
+            <span>Patient Records</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Admission History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Emergency Department Operations</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="badge badge-success">🟢 Level 1 Trauma Center Active</span>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Two Column Layout: Physician Roster & Equipment Readiness -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.75rem; margin-bottom:2rem;">
+          
+          <!-- On-Duty Clinical Roster -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>👨‍⚕️ On-Duty Emergency Medical Team</span>
+              </div>
+              <span class="badge badge-success">8 PHYSICIANS ACTIVE</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+              
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:0.75rem; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <h4 style="font-size:0.95rem;">Dr. Evelyn Reed, MD</h4>
+                  <span style="font-size:0.8rem; color:var(--text-secondary);">Chief of Emergency Medicine & Trauma Lead</span>
+                </div>
+                <span class="badge badge-critical">ON ACTIVE TRIAGE</span>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:0.75rem; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <h4 style="font-size:0.95rem;">Dr. Robert Chen, MD</h4>
+                  <span style="font-size:0.8rem; color:var(--text-secondary);">Interventional Cardiologist (Cath Lab)</span>
+                </div>
+                <span class="badge badge-success">STANDBY</span>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between; padding-bottom:0.75rem; border-bottom:1px solid var(--border-color);">
+                <div>
+                  <h4 style="font-size:0.95rem;">Dr. Marcus Albers, MD</h4>
+                  <span style="font-size:0.8rem; color:var(--text-secondary);">Trauma & Vascular Surgeon</span>
+                </div>
+                <span class="badge badge-success">AVAILABLE</span>
+              </div>
+
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <div>
+                  <h4 style="font-size:0.95rem;">Nurse Supervisor Clara Holt, RN</h4>
+                  <span style="font-size:0.8rem; color:var(--text-secondary);">ER Charge Nurse & Resuscitation Lead</span>
+                </div>
+                <span class="badge badge-info">BAY 1 PREP</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Medical Equipment & Life Support Systems -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">
+                <span>⚡ Critical Equipment Telemetry</span>
+              </div>
+              <span class="badge badge-info">DIAGNOSTICS</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.9rem; font-size:0.875rem;">
+              
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                <span>High-Speed 128-Slice CT Trauma Scanner:</span>
+                <span class="badge badge-success">ONLINE (CLEAR)</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                <span>Mechanical Invasive Ventilators:</span>
+                <strong>8 Available &bull; 4 in Use</strong>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                <span>Point-of-Care Blood Gas & Cardiac Enzymes:</span>
+                <span class="badge badge-success">CALIBRATED</span>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:0.5rem; border-bottom:1px solid var(--border-color);">
+                <span>Emergency Blood Bank Supply (O-Negative):</span>
+                <strong style="color:var(--primary-accent);">12 Units Reserved</strong>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span>Helipad Readiness & Weather Clearance:</span>
+                <span class="badge badge-success">CLEAR & OPERATIONAL</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="incoming.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚑</span>
+          <span>Incoming</span>
+        </a>
+        <a href="beds.html" class="mobile-nav-item">
+          <span class="mobile-icon">🛏️</span>
+          <span>Beds</span>
+        </a>
+        <a href="patients.html" class="mobile-nav-item">
+          <span class="mobile-icon">🔒</span>
+          <span>Patients</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/hospital.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('HOSPITAL');
+    });
+  </script>
+</body>
+</html>

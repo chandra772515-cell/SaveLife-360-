@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Destination Hospital | SaveLife 360 Driver</title>
+  <meta name="description" content="Driver Hospital Selection Console - Compare emergency department capacity, ICU availability, and route to closest capable facility.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Driver Dispatch</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge driver">🚑 Verified Driver</span>
+        <span class="badge badge-success" style="font-size:0.68rem;">HOSPITAL SELECT</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Dispatch Operations</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="requests.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>New Requests</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="active-emergency.html" class="sidebar-link">
+            <span class="menu-icon">⚡</span>
+            <span>Active Emergency</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="navigation.html" class="sidebar-link">
+            <span class="menu-icon">🧭</span>
+            <span>Navigation HUD</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link active">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Selection</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Trip History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="active-emergency.html" class="btn btn-secondary btn-sm">← Active Mission</a>
+          <h1>Hospital Routing & ER Selection</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Tools
+          </button>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <div class="card" style="margin-bottom: 2rem; background:#FFFFFF; border-left:4px solid var(--primary-accent);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="badge badge-demo" style="margin-bottom:0.3rem;">CLINICAL ROUTING</span>
+              <h3 style="font-size:1.25rem;">Select Receiving Emergency Hospital</h3>
+              <p style="font-size:0.875rem; color:var(--text-secondary);">
+                Choose the hospital facility with confirmed emergency beds and appropriate specialty (Cath Lab, Trauma 1, Burn Unit).
+              </p>
+            </div>
+            <span style="font-size:0.85rem; font-weight:700; color:var(--success);">
+              🟢 Real-time Bed Capacities Synced
+            </span>
+          </div>
+        </div>
+
+        <!-- Hospitals Grid Required by Section 16 -->
+        <div class="portals-grid" id="driver-hospitals-grid">
+          <!-- Dynamically populated via js/driver.js -->
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="requests.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚨</span>
+          <span>Requests</span>
+        </a>
+        <a href="active-emergency.html" class="mobile-nav-item">
+          <span class="mobile-icon">⚡</span>
+          <span>Active</span>
+        </a>
+        <a href="navigation.html" class="mobile-nav-item">
+          <span class="mobile-icon">🧭</span>
+          <span>HUD</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/driver.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('DRIVER');
+    });
+  </script>
+</body>
+</html>

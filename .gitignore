@@ -1,0 +1,30 @@
+# Node.js / NPM (if ever used for dev tooling)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Environment & Secrets (never commit these)
+.env
+.env.local
+.env.*.local
+*.secret
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Build / Cache outputs (if added later)
+dist/
+build/
+.cache/
+*.log
+
+# OS files
+desktop.ini

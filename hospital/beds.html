@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bed Capacity Management | SaveLife 360 Hospital</title>
+  <meta name="description" content="Manage real-time hospital bed capacity, emergency resuscitation bays, and ICU availability.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon" style="background:#2E7D32;">🏥</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Hospital Command</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge hospital">🏥 Hospital Office</span>
+        <span class="badge badge-success" style="font-size:0.68rem;">BED ALLOCATION</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Intake</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="incoming.html" class="sidebar-link">
+            <span class="menu-icon">🚑</span>
+            <span>Incoming Ambulances</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="beds.html" class="sidebar-link active">
+            <span class="menu-icon">🛏️</span>
+            <span>Bed Availability</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="emergency-department.html" class="sidebar-link">
+            <span class="menu-icon">🩺</span>
+            <span>Emergency Department</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="patients.html" class="sidebar-link">
+            <span class="menu-icon">🔒</span>
+            <span>Patient Records</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Admission History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Hospital Bed & ICU Management</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <span class="badge badge-success">✓ Live Network Broadcast Active</span>
+        </div>
+      </header>
+
+      <div class="page-container" style="max-width: 900px; margin: 0 auto;">
+        
+        <div class="card" style="margin-bottom: 2rem; background:#FFFFFF; border-left:4px solid var(--success);">
+          <h3 style="font-size:1.2rem; margin-bottom:0.3rem;">Real-Time Facility Capacity Controls</h3>
+          <p style="font-size:0.875rem; color:var(--text-secondary);">
+            Adjusting counts here immediately synchronizes with incoming ambulance drivers and regional emergency dispatchers to prevent hospital bypass and unnecessary diversion.
+          </p>
+        </div>
+
+        <!-- Bed Counters Required by Section 21 -->
+        <div class="bed-counter-card">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+              <h3 style="font-size:1.25rem;">Emergency Resuscitation Beds</h3>
+              <span class="badge badge-critical">LEVEL 1 TRAUMA</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+              Equipped with cardiac monitors, oxygen feeds, and emergency medication carts.
+            </p>
+          </div>
+
+          <div class="bed-counter-controls">
+            <button class="btn-counter" id="btn-er-minus" title="Decrease">−</button>
+            <div class="counter-value" id="count-er-beds" style="color:var(--primary-accent);">6</div>
+            <button class="btn-counter" id="btn-er-plus" title="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="bed-counter-card">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+              <h3 style="font-size:1.25rem;">Intensive Care Unit (ICU) Beds</h3>
+              <span class="badge badge-high">CRITICAL CARE</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+              Dedicated invasive ventilation, arterial line monitors, and 1:1 nursing care.
+            </p>
+          </div>
+
+          <div class="bed-counter-controls">
+            <button class="btn-counter" id="btn-icu-minus" title="Decrease">−</button>
+            <div class="counter-value" id="count-icu-beds" style="color:var(--high-emergency);">3</div>
+            <button class="btn-counter" id="btn-icu-plus" title="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="bed-counter-card">
+          <div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+              <h3 style="font-size:1.25rem;">General Inpatient Emergency Beds</h3>
+              <span class="badge badge-info">STEP-DOWN</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+              Standard inpatient observation and post-stabilization beds.
+            </p>
+          </div>
+
+          <div class="bed-counter-controls">
+            <button class="btn-counter" id="btn-gen-minus" title="Decrease">−</button>
+            <div class="counter-value" id="count-gen-beds" style="color:var(--text-primary);">24</div>
+            <button class="btn-counter" id="btn-gen-plus" title="Increase">+</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:2rem; background:var(--bg-muted);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Security Enforced:</span>
+              <p style="font-size:0.85rem; font-weight:600; color:var(--text-primary);">
+                Only authenticated hospital clinical coordinators can alter regional bed allocations.
+              </p>
+            </div>
+            <span class="badge badge-success">✓ ALLOCATION LOGGED</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="incoming.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚑</span>
+          <span>Incoming</span>
+        </a>
+        <a href="beds.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🛏️</span>
+          <span>Beds</span>
+        </a>
+        <a href="patients.html" class="mobile-nav-item">
+          <span class="mobile-icon">🔒</span>
+          <span>Patients</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/hospital.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('HOSPITAL');
+    });
+  </script>
+</body>
+</html>

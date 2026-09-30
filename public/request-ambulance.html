@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request Emergency Ambulance | SaveLife 360</title>
+  <meta name="description" content="Rapid multi-step emergency ambulance dispatch wizard with live GPS localization and fleet matching.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Every Second Matters</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge public">👤 Public Citizen</span>
+        <span class="badge badge-critical" style="font-size:0.68rem;">DISPATCH WIZARD</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Core</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="request-ambulance.html" class="sidebar-link active">
+            <span class="menu-icon">🚨</span>
+            <span>Request Ambulance</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tracking.html" class="sidebar-link">
+            <span class="menu-icon">🗺️</span>
+            <span>Ambulance Tracking</span>
+          </a>
+        </li>
+        <li class="menu-category-title">Healthcare Network</li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Information</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Emergency History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Back</a>
+          <h1>Emergency Request Wizard</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <a href="tel:108" class="emergency-phone-tag">
+            <span>📞</span> Direct Call: 108
+          </a>
+        </div>
+      </header>
+
+      <div class="page-container" style="max-width: 900px; margin: 0 auto;">
+        
+        <!-- Multi-Step Progress Bar -->
+        <div class="wizard-progress-bar">
+          <div class="wizard-step-node active" data-step-indicator="1">
+            <div class="wizard-step-num">1</div>
+            <span class="step-title">Location</span>
+          </div>
+          <div class="wizard-step-node" data-step-indicator="2">
+            <div class="wizard-step-num">2</div>
+            <span class="step-title">Emergency Type</span>
+          </div>
+          <div class="wizard-step-node" data-step-indicator="3">
+            <div class="wizard-step-num">3</div>
+            <span class="step-title">Severity Level</span>
+          </div>
+          <div class="wizard-step-node" data-step-indicator="4">
+            <div class="wizard-step-num">4</div>
+            <span class="step-title">Searching Fleet</span>
+          </div>
+          <div class="wizard-step-node" data-step-indicator="5">
+            <div class="wizard-step-num">5</div>
+            <span class="step-title">Ambulance Found</span>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 1: LOCATION ==================== -->
+        <div class="card wizard-step-content active" data-step="1">
+          <div class="card-header">
+            <div class="card-title">
+              <span>📍 Step 1 — Incident Pickup Location</span>
+            </div>
+            <span class="badge badge-info">GPS TELEMETRY</span>
+          </div>
+
+          <div style="background:#EBF3FC; border:1px solid #B9D5F3; border-radius:var(--radius-md); padding:1.25rem; margin-bottom:1.5rem;">
+            <h4 style="color:#0D47A1; margin-bottom:0.4rem;">Allow SaveLife 360 to access your location?</h4>
+            <p style="font-size:0.875rem; color:#1F2933; margin-bottom:1rem;">
+              Enabling precise GPS positioning ensures the closest ambulance can navigate directly to your location without address confusion.
+            </p>
+            <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
+              <button type="button" class="btn btn-emergency btn-sm" id="btn-detect-location">
+                📡 Use Device GPS Location
+              </button>
+              <span id="location-status-text" style="font-size:0.85rem; font-weight:600;">
+                <span class="status-dot pulse" style="color:var(--success);"></span> 📍 Current Location Detected
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pickup-address-input">
+              Pickup Street Address / Landmark (Manual adjustment allowed):
+            </label>
+            <input type="text" id="pickup-address-input" class="form-input" value="742 Evergreen Terrace, Sector 4 (Near Metro Plaza)" placeholder="Enter street address, building or landmark...">
+            <span style="font-size:0.78rem; color:var(--text-secondary); margin-top:0.3rem; display:block;">
+              You can refine the detected address above to help the ambulance driver locate you faster.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="pickup-contact-phone">Caller Contact Number:</label>
+            <input type="tel" id="pickup-contact-phone" class="form-input" value="+1 (555) 234-8901">
+          </div>
+
+          <div style="display:flex; justify-content:flex-end; margin-top:1.5rem;">
+            <button type="button" class="btn btn-emergency btn-lg" id="step-1-next">
+              Confirm Location & Next →
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 2: EMERGENCY TYPE ==================== -->
+        <div class="card wizard-step-content" data-step="2">
+          <div class="card-header">
+            <div class="card-title">
+              <span>🩺 Step 2 — Select Emergency Nature</span>
+            </div>
+            <span class="badge badge-demo">EQUIPMENT TRIAGE</span>
+          </div>
+
+          <p style="font-size:0.925rem; color:var(--text-secondary);">
+            Choose the category that best describes the patient’s condition. This informs the dispatch center which on-board medical equipment (ventilator, defibrillator, pediatric kit) is needed.
+          </p>
+
+          <div class="emergency-type-grid">
+            <div class="type-select-card selected" data-type="Accident">
+              <div class="type-icon">🚗</div>
+              <h4>Accident / Collision</h4>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Vehicle crash, pedestrian collision, major trauma</p>
+            </div>
+
+            <div class="type-select-card" data-type="Cardiac Emergency">
+              <div class="type-icon">❤️</div>
+              <h4>Cardiac Emergency</h4>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Chest pain, suspected heart attack, severe palpitations</p>
+            </div>
+
+            <div class="type-select-card" data-type="Breathing Emergency">
+              <div class="type-icon">🫁</div>
+              <h4>Breathing Emergency</h4>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Severe shortness of breath, asthma attack, choking</p>
+            </div>
+
+            <div class="type-select-card" data-type="Severe Injury">
+              <div class="type-icon">🩹</div>
+              <h4>Injury / Fracture</h4>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Deep bleeding laceration, head fall, bone trauma</p>
+            </div>
+
+            <div class="type-select-card" data-type="Other Medical Emergency">
+              <div class="type-icon">➕</div>
+              <h4>Other Medical</h4>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.3rem;">Unconsciousness, stroke signs, allergic reaction</p>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+            <button type="button" class="btn btn-secondary" id="step-2-back">← Back</button>
+            <button type="button" class="btn btn-emergency btn-lg" id="step-2-next">Next: Severity Level →</button>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 3: EMERGENCY LEVEL ==================== -->
+        <div class="card wizard-step-content" data-step="3">
+          <div class="card-header">
+            <div class="card-title">
+              <span>⚠️ Step 3 — Estimated Emergency Severity</span>
+            </div>
+            <span class="badge badge-critical">PRIORITY LEVEL</span>
+          </div>
+
+          <!-- Important Medical Assessment Disclaimer Required by Spec -->
+          <div style="background:#FFF9E6; border:1px solid #FFE082; border-radius:var(--radius-md); padding:1rem; margin-bottom:1.5rem; font-size:0.875rem;">
+            <strong>⚠️ Medical Disclaimer:</strong> Your selection is an initial indication for fleet routing and equipment mobilization, and should not replace professional medical assessment. Paramedics will triage on arrival.
+          </div>
+
+          <div class="severity-level-grid">
+            
+            <div class="severity-card critical selected" data-level="CRITICAL">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="badge badge-critical">CRITICAL</span>
+                <span style="font-size:1.5rem;">🔴</span>
+              </div>
+              <h3 style="color:var(--critical); font-size:1.2rem; margin-bottom:0.3rem;">Immediate Life Threat</h3>
+              <p style="font-size:0.825rem; color:var(--text-secondary);">
+                Patient is unconscious, unresponsive, not breathing normally, or experiencing catastrophic trauma.
+              </p>
+            </div>
+
+            <div class="severity-card high" data-level="HIGH">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="badge badge-high">HIGH</span>
+                <span style="font-size:1.5rem;">🟠</span>
+              </div>
+              <h3 style="color:var(--high-emergency); font-size:1.2rem; margin-bottom:0.3rem;">Urgent Medical Case</h3>
+              <p style="font-size:0.825rem; color:var(--text-secondary);">
+                Severe pain, persistent bleeding, high fever with altered state, or inability to stand.
+              </p>
+            </div>
+
+            <div class="severity-card moderate" data-level="MODERATE">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                <span class="badge badge-moderate">MODERATE</span>
+                <span style="font-size:1.5rem;">🟡</span>
+              </div>
+              <h3 style="color:var(--moderate); font-size:1.2rem; margin-bottom:0.3rem;">Non-Immediate</h3>
+              <p style="font-size:0.825rem; color:var(--text-secondary);">
+                Stable patient needing professional medical transport to hospital or minor trauma.
+              </p>
+            </div>
+
+          </div>
+
+          <div class="form-group" style="margin-top:1.5rem;">
+            <label class="form-label" for="emergency-notes-input">Additional Patient Details (Optional):</label>
+            <textarea id="emergency-notes-input" class="form-textarea" rows="2" placeholder="e.g., Patient is conscious, complains of crushing chest pressure. Apartment on 2nd floor with elevator."></textarea>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; margin-top:1.5rem;">
+            <button type="button" class="btn btn-secondary" id="step-3-back">← Back</button>
+            <button type="button" class="btn btn-emergency btn-lg" id="step-3-next">
+              🚨 Broadcast Emergency Dispatch →
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================== STEP 4: SEARCHING FLEET ==================== -->
+        <div class="wizard-step-content" data-step="4">
+          <div class="radar-pulse-box">
+            
+            <div class="pulse-sonar-container">
+              <div class="pulse-ring"></div>
+              <div class="pulse-ring"></div>
+              <div class="pulse-ring"></div>
+              <div class="pulse-sonar-circle">🚑</div>
+            </div>
+
+            <h2 style="font-size:1.85rem; margin-bottom:0.5rem; color:var(--primary-accent); letter-spacing:-0.01em;">
+              SEARCHING FOR NEARBY AMBULANCE...
+            </h2>
+            <p id="search-status-text" style="font-size:1.05rem; color:var(--text-secondary); max-width:520px; margin:0 auto 1.5rem;">
+              Connecting to SaveLife 360 Emergency Dispatch Network...
+            </p>
+
+            <div style="display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-muted); padding:0.5rem 1rem; border-radius:var(--radius-full); font-size:0.85rem;">
+              <span class="status-dot pulse" style="color:var(--critical);"></span>
+              <span>Scanning 420 active ambulance units within 8 km radius</span>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== STEP 5: AMBULANCE FOUND ==================== -->
+        <div class="wizard-step-content" data-step="5">
+          <div class="ambulance-match-card">
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <span class="badge badge-success" style="font-size:0.85rem; margin-bottom:0.5rem;">
+                  ✓ DISPATCH CONFIRMED
+                </span>
+                <h2 style="font-size:2rem; font-weight:800; color:var(--text-primary);">
+                  AMBULANCE FOUND
+                </h2>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:0.8rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Arriving in:</span>
+                <div style="font-size:2.2rem; font-weight:800; color:var(--primary-accent);">~5 Minutes</div>
+              </div>
+            </div>
+
+            <!-- Ambulance Specs Display -->
+            <div class="ambulance-specs-grid">
+              <div class="spec-item">
+                <label>Ambulance ID</label>
+                <span>AMB-704-CR</span>
+              </div>
+              <div class="spec-item">
+                <label>Driver / Medic</label>
+                <span>Marcus Vance</span>
+              </div>
+              <div class="spec-item">
+                <label>Distance</label>
+                <span>2.4 km</span>
+              </div>
+              <div class="spec-item">
+                <label>Status</label>
+                <span style="color:var(--success);">En Route</span>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:1.25rem; background:var(--bg-muted); border-radius:var(--radius-md); padding:1rem; margin-bottom:1.75rem;">
+              <div style="width:48px; height:48px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; border:1px solid var(--border-color);">
+                👨‍⚕️
+              </div>
+              <div style="flex-grow:1;">
+                <h4 style="font-size:0.95rem;">Driver Marcus Vance &bull; ACLS Certified</h4>
+                <p style="font-size:0.8rem; color:var(--text-secondary);">Direct Vehicle Contact: +1 (555) 782-4419</p>
+              </div>
+              <a href="tel:+15557824419" class="btn btn-secondary btn-sm">📞 Call Driver</a>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <span style="font-size:0.85rem; color:var(--text-secondary);">
+                GPS telemetry is streaming. Driver has received your exact coordinates.
+              </span>
+              <a href="tracking.html" class="btn btn-emergency btn-lg" id="btn-goto-live-tracking" style="font-size:1.15rem;">
+                🗺️ Proceed to Live Tracking →
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="request-ambulance.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🚨</span>
+          <span>Request</span>
+        </a>
+        <a href="tracking.html" class="mobile-nav-item">
+          <span class="mobile-icon">🗺️</span>
+          <span>Track</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/public.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('PUBLIC');
+    });
+  </script>
+</body>
+</html>

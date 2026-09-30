@@ -1,0 +1,181 @@
+/* ===================================================================
+   SaveLife 360 - Responsive Styles & Mobile-First Adaptations
+   =================================================================== */
+
+/* Tablet & Smaller Desktop (Max 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 220px;
+  }
+  
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .flow-diagram-container,
+  .features-grid,
+  .portals-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .flow-arrow-indicator {
+    display: none;
+  }
+  
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .tracking-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ambulance-specs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Tablets & Mobile (Max 768px) */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+    --sidebar-width: 0px;
+  }
+  
+  h1 { font-size: 2.1rem; }
+  h2 { font-size: 1.6rem; }
+  h3 { font-size: 1.25rem; }
+  
+  /* Navigation */
+  .landing-nav .nav-links {
+    display: none;
+  }
+  
+  .hero-title {
+    font-size: 2.4rem;
+  }
+  
+  .hero-stats-row {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  /* Portals and Features */
+  .flow-diagram-container,
+  .features-grid,
+  .portals-grid,
+  .role-selection-grid,
+  .severity-level-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .journey-steps-track {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding-left: 2rem;
+  }
+  
+  .journey-steps-track::before {
+    top: 10px;
+    bottom: 10px;
+    left: 20px;
+    right: auto;
+    width: 3px;
+    height: auto;
+  }
+  
+  .journey-node {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+  }
+  
+  .journey-node-dot {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  
+  /* Dashboard layout with bottom navigation */
+  .app-sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+  }
+  
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .app-main {
+    margin-left: 0;
+    max-width: 100%;
+    padding-bottom: 74px; /* Space for bottom nav */
+  }
+  
+  .app-topbar {
+    padding: 0 1.25rem;
+  }
+  
+  .page-container {
+    padding: 1.25rem;
+  }
+  
+  .mobile-bottom-nav {
+    display: flex;
+  }
+  
+  .sidebar-toggle-btn {
+    display: block !important;
+  }
+  
+  .road-alert-banner {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .btn-emergency-huge {
+    padding: 1.75rem 1.25rem;
+    font-size: 1.25rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small Mobile (Max 480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.95rem;
+  }
+  
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .hero-cta-group .btn {
+    width: 100%;
+  }
+  
+  .emergency-type-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ambulance-specs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hud-metrics {
+    grid-template-columns: 1fr;
+  }
+}

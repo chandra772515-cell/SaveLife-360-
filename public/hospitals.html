@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Availability Directory | SaveLife 360</title>
+  <meta name="description" content="Real-time availability of verified emergency hospital facilities, trauma bays, and ICU beds.">
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Every Second Matters</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge public">👤 Public Citizen</span>
+        <span class="badge badge-success" style="font-size:0.68rem;">ER DIRECTORY</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Core</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="request-ambulance.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>Request Ambulance</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tracking.html" class="sidebar-link">
+            <span class="menu-icon">🗺️</span>
+            <span>Ambulance Tracking</span>
+          </a>
+        </li>
+        <li class="menu-category-title">Healthcare Network</li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link active">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Information</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Emergency History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Hospital ER & Bed Availability</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Controls
+          </button>
+          <a href="request-ambulance.html" class="btn btn-emergency btn-sm">
+            🚨 Request Ambulance
+          </a>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Search & Filter Controls -->
+        <div class="card" style="margin-bottom: 2rem; padding: 1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div style="flex-grow:1; max-width:480px;">
+              <input type="text" id="search-hospital-input" class="form-input" placeholder="🔍 Search hospitals by name, specialty, or street...">
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <label style="font-size:0.85rem; font-weight:600; color:var(--text-secondary);">Status Filter:</label>
+              <select id="filter-hospital-status" class="form-select" style="width: auto;">
+                <option value="ALL">All Facilities</option>
+                <option value="ACCEPTING">Accepting Emergencies Only</option>
+                <option value="LIMITED">Limited Capacity</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hospitals Cards Grid -->
+        <div class="portals-grid" id="hospitals-directory-grid">
+          <!-- Dynamically populated via js/public.js -->
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="request-ambulance.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚨</span>
+          <span>Request</span>
+        </a>
+        <a href="tracking.html" class="mobile-nav-item">
+          <span class="mobile-icon">🗺️</span>
+          <span>Track</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/public.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('PUBLIC');
+    });
+  </script>
+</body>
+</html>

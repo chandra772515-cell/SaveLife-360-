@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Ambulance Tracking | SaveLife 360</title>
+  <meta name="description" content="Real-time GPS tracking and live status timeline for dispatched emergency ambulances.">
+  
+  <!-- Leaflet CSS for map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/logo.svg">
+</head>
+<body style="background-color: var(--bg-main);">
+
+  <div class="app-layout">
+    
+    <!-- Sidebar -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="sidebar-brand">
+        <a href="../index.html" class="brand-logo">
+          <div class="logo-icon">🚑</div>
+          <div>
+            <span style="font-size:1.15rem;">SaveLife 360</span>
+            <span class="tagline-sub">Every Second Matters</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="sidebar-role-indicator">
+        <span class="role-tag-badge public">👤 Public Citizen</span>
+        <span class="badge badge-critical" style="font-size:0.68rem;">LIVE TRACKING</span>
+      </div>
+
+      <ul class="sidebar-menu">
+        <li class="menu-category-title">Emergency Core</li>
+        <li class="sidebar-item">
+          <a href="dashboard.html" class="sidebar-link">
+            <span class="menu-icon">🏠</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="request-ambulance.html" class="sidebar-link">
+            <span class="menu-icon">🚨</span>
+            <span>Request Ambulance</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tracking.html" class="sidebar-link active">
+            <span class="menu-icon">🗺️</span>
+            <span>Ambulance Tracking</span>
+          </a>
+        </li>
+        <li class="menu-category-title">Healthcare Network</li>
+        <li class="sidebar-item">
+          <a href="hospitals.html" class="sidebar-link">
+            <span class="menu-icon">🏥</span>
+            <span>Hospital Information</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="history.html" class="sidebar-link">
+            <span class="menu-icon">📋</span>
+            <span>Emergency History</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-block" onclick="window.SaveLifeAuth.logout();">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+      
+      <header class="app-topbar">
+        <div class="topbar-title">
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Dashboard</a>
+          <h1>Live Emergency Tracking</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.showRoadAlertBanner();">
+            🚨 Test Road Alert
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="window.SaveLifeMain.openDemoModal();">
+            ⚙️ Demo Controls
+          </button>
+          <a href="tel:108" class="emergency-phone-tag">
+            <span>📞</span> 108
+          </a>
+        </div>
+      </header>
+
+      <div class="page-container">
+        
+        <!-- Ambulance Road Alert Banner -->
+        <div class="road-alert-banner" style="margin-bottom: 1.5rem;">
+          <div class="road-alert-icon-wrap">🚨</div>
+          <div style="flex-grow:1;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+              <h4 style="color:#856404; font-size:1.05rem; font-weight:800;">Emergency Ambulance Approaching</h4>
+              <span class="badge badge-demo">ROAD SAFETY PROTOCOL</span>
+            </div>
+            <p style="color:#533f03; font-size:0.9rem;">
+              <strong>An emergency ambulance is approaching your route. Please slow down and give way safely.</strong>
+            </p>
+            <div style="font-size:0.75rem; color:#856404; margin-top:0.3rem;">
+              Telemetry active &bull; Only safety-critical vehicle vector information broadcast to surrounding motorists.
+            </div>
+          </div>
+        </div>
+
+        <!-- No Emergency State Message -->
+        <div id="tracking-no-emergency" class="card" style="display:none; text-align:center; padding:3rem 1.5rem;">
+          <div style="font-size:3rem; margin-bottom:1rem;">🚑</div>
+          <h3 style="margin-bottom:0.5rem;">No Active Emergency Dispatch</h3>
+          <p style="color:var(--text-secondary); max-width:440px; margin:0 auto 1.5rem;">
+            There are currently no active ambulance dispatches linked to your account.
+          </p>
+          <a href="request-ambulance.html" class="btn btn-emergency btn-lg">
+            🚨 Request Ambulance Now
+          </a>
+        </div>
+
+        <!-- Tracking Content Grid -->
+        <div class="tracking-grid" id="tracking-content">
+          
+          <!-- Column 1: Large Interactive Map -->
+          <div class="tracking-map-wrapper">
+            <!-- Map Container (Leaflet / Canvas fallback) -->
+            <div class="map-view-canvas" id="tracking-live-map"></div>
+
+            <!-- Route Summary Bar -->
+            <div style="padding:1rem 1.25rem; background:#FFFFFF; border-top:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <div style="display:flex; align-items:center; gap:1.5rem;">
+                <div>
+                  <span style="font-size:0.72rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Arrival Countdown</span>
+                  <div style="font-size:1.4rem; font-weight:800; color:var(--primary-accent);">
+                    Arriving in <span id="tracking-eta-number">5</span> minutes
+                  </div>
+                </div>
+                <div>
+                  <span style="font-size:0.72rem; color:var(--text-secondary); text-transform:uppercase; font-weight:700;">Remaining Distance</span>
+                  <div style="font-size:1.4rem; font-weight:800; color:var(--text-primary);" id="tracking-distance-number">
+                    2.4 km
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:0.5rem;">
+                <button class="btn btn-outline-danger btn-sm" id="btn-cancel-emergency">
+                  Cancel Request
+                </button>
+                <a href="tel:+15557824419" class="btn btn-emergency btn-sm">
+                  📞 Call Ambulance Driver
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Status Timeline & Emergency Telemetry Card -->
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            
+            <!-- Ambulance & Driver Card -->
+            <div class="card">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem;">
+                <div>
+                  <span id="tracking-level-badge" class="badge badge-critical" style="margin-bottom:0.35rem;">CRITICAL</span>
+                  <h3 style="font-size:1.2rem;">Unit AMB-704-CR</h3>
+                  <p style="font-size:0.825rem; color:var(--text-secondary);">Advanced Cardiac Life Support (ACLS)</p>
+                </div>
+                <span id="tracking-status-badge" class="badge badge-critical">DRIVER EN ROUTE</span>
+              </div>
+
+              <div style="background:var(--bg-muted); padding:0.85rem 1rem; border-radius:var(--radius-md); font-size:0.85rem; margin-bottom:1rem;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.3rem;">
+                  <span style="color:var(--text-secondary);">Driver:</span>
+                  <strong>Marcus Vance (Paramedic)</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:0.3rem;">
+                  <span style="color:var(--text-secondary);">Vehicle Speed:</span>
+                  <strong>58 km/h (Emergency Sirens On)</strong>
+                </div>
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="color:var(--text-secondary);">Target Hospital:</span>
+                  <strong>Metro Health Central ER</strong>
+                </div>
+              </div>
+
+              <div style="font-size:0.8rem; color:var(--text-secondary);">
+                📍 <strong>Pickup Spot:</strong> 742 Evergreen Terrace, Sector 4
+              </div>
+            </div>
+
+            <!-- Status Timeline Required by Spec -->
+            <div class="card">
+              <div class="card-header" style="margin-bottom:1rem; padding-bottom:0.5rem;">
+                <div class="card-title" style="font-size:1rem;">
+                  <span>⏱️ Dispatch Lifecycle</span>
+                </div>
+                <span class="badge badge-demo" style="font-size:0.7rem;">SYNCHRONIZED</span>
+              </div>
+
+              <ul class="status-timeline">
+                <li class="status-timeline-item done" id="step-req">
+                  <div class="status-timeline-bullet">✓</div>
+                  <h5>Request Created</h5>
+                  <p>GPS coordinates acquired and broadcast.</p>
+                </li>
+
+                <li class="status-timeline-item done" id="step-amb">
+                  <div class="status-timeline-bullet">✓</div>
+                  <h5>Ambulance Assigned</h5>
+                  <p>Unit AMB-704 matched to case.</p>
+                </li>
+
+                <li class="status-timeline-item active" id="step-enroute">
+                  <div class="status-timeline-bullet">●</div>
+                  <h5>Driver On The Way</h5>
+                  <p>Speeding to pickup point with siren beacon.</p>
+                </li>
+
+                <li class="status-timeline-item" id="step-pickup">
+                  <div class="status-timeline-bullet">○</div>
+                  <h5>Patient Pickup</h5>
+                  <p>Paramedics administer on-scene stabilization.</p>
+                </li>
+
+                <li class="status-timeline-item" id="step-hospital">
+                  <div class="status-timeline-bullet">○</div>
+                  <h5>Hospital Intake</h5>
+                  <p>Transferred to reserved trauma resuscitation bay.</p>
+                </li>
+
+                <li class="status-timeline-item" id="step-completed">
+                  <div class="status-timeline-bullet">○</div>
+                  <h5>Completed</h5>
+                  <p>Admitted and handed over to surgical ER team.</p>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Mobile Bottom Navigation Bar -->
+      <nav class="mobile-bottom-nav">
+        <a href="dashboard.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏠</span>
+          <span>Home</span>
+        </a>
+        <a href="request-ambulance.html" class="mobile-nav-item">
+          <span class="mobile-icon">🚨</span>
+          <span>Request</span>
+        </a>
+        <a href="tracking.html" class="mobile-nav-item active" style="color:var(--primary-accent); font-weight:800;">
+          <span class="mobile-icon">🗺️</span>
+          <span>Track</span>
+        </a>
+        <a href="hospitals.html" class="mobile-nav-item">
+          <span class="mobile-icon">🏥</span>
+          <span>Hospitals</span>
+        </a>
+        <a href="history.html" class="mobile-nav-item">
+          <span class="mobile-icon">📋</span>
+          <span>History</span>
+        </a>
+      </nav>
+
+    </main>
+
+  </div>
+
+  <!-- Leaflet JS for map -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- App Scripts -->
+  <script src="../js/data.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/notifications.js"></script>
+  <script src="../js/public.js"></script>
+  <script src="../js/main.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      window.SaveLifeAuth.protect('PUBLIC');
+    });
+  </script>
+</body>
+</html>
